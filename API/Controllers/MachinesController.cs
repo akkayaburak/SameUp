@@ -1,9 +1,11 @@
 using Application.Core.Machines;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class MachinesController : BaseApiController
     {
         [HttpPost]

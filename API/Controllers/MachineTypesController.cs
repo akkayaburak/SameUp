@@ -1,8 +1,10 @@
 using Application.Core.MachineTypes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class MachineTypesController : BaseApiController
     {
         [HttpGet("{categoryId}")]

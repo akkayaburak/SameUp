@@ -1,31 +1,32 @@
 using Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace Persistence
 {
     public class Seed
     {
-        public static async Task SeedData(DataContext context)
+        public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
         {
-            if(!context.MachineCategories.Any()) 
+            if (!context.MachineCategories.Any())
             {
                 var machineCategories = new List<MachineCategory>()
                 {
-                    new MachineCategory 
+                    new MachineCategory
                     {
                         Name = "Hafriyat Grubu"
                     },
-                    new MachineCategory 
+                    new MachineCategory
                     {
                         Name = "Forklift ve İstifleyiciler"
                     },
-                    new MachineCategory 
+                    new MachineCategory
                     {
                         Name = "Asfalt ve Yol Makinalari"
                     },
                 };
                 var machineBrands = new List<MachineBrand>()
                 {
-                    new MachineBrand 
+                    new MachineBrand
                     {
                         MachineCategory = machineCategories[0],
                         Name = "Hafriyat Brand",
@@ -43,17 +44,17 @@ namespace Persistence
                 };
                 var machineTypes = new List<MachineType>()
                 {
-                    new MachineType 
+                    new MachineType
                     {
                         MachineCategory = machineCategories[0],
                         Name = "Hafriyat Machine Type",
                     },
-                    new MachineType 
+                    new MachineType
                     {
                         MachineCategory = machineCategories[1],
                         Name = "Forklift MachineType"
                     },
-                    new MachineType 
+                    new MachineType
                     {
                         MachineCategory = machineCategories[2],
                         Name = "Asfalt MachineCategory"
@@ -62,17 +63,17 @@ namespace Persistence
 
                 var attachments = new List<Attachment>()
                 {
-                    new Attachment 
+                    new Attachment
                     {
                         MachineType = machineTypes[0],
                         Name = "Hafriyat Attachment",
                     },
-                    new Attachment 
+                    new Attachment
                     {
                         MachineType = machineTypes[1],
                         Name = "Forklift Attachment",
                     },
-                    new Attachment 
+                    new Attachment
                     {
                         MachineType = machineTypes[2],
                         Name = "Asfalt Attachment"
@@ -81,14 +82,14 @@ namespace Persistence
 
                 var machines = new List<Machine>()
                 {
-                    new Machine 
+                    new Machine
                     {
                         MachineBrand = machineBrands[0],
                         MachineType = machineTypes[0],
                         ModelName = "Hafriyat Machine",
                         YearOfProduction = DateTime.Now.Year
                     },
-                    new Machine 
+                    new Machine
                     {
                         MachineBrand = machineBrands[1],
                         MachineType = machineTypes[1],
@@ -121,6 +122,17 @@ namespace Persistence
                 await context.Attachments.AddRangeAsync(attachments);
                 await context.Machines.AddRangeAsync(machines);
 
+                await context.SaveChangesAsync();
+            }
+
+            if (!context.Users.Any())
+            {
+                var user = new AppUser
+                {
+                    Email = "burak@test.com",
+                    UserName  = "akkayaburak"
+                };
+                await userManager.CreateAsync(user, "Pa$$w0rd");
                 await context.SaveChangesAsync();
             }
         }

@@ -1,11 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace Domain
 {
-    public class AppUser
+    public class AppUser : IdentityUser
     {
-        public Guid MyProperty { get; set; }
     }
 }
