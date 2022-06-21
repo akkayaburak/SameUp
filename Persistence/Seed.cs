@@ -103,6 +103,18 @@ namespace Persistence
                         YearOfProduction = DateTime.Now.Year - 2
                     }
                 };
+                machineCategories[0].MachineBrands = new List<MachineBrand>()
+                {
+                    machineBrands[0]
+                };
+                machineCategories[1].MachineBrands = new List<MachineBrand>()
+                {
+                    machineBrands[1]
+                };
+                machineCategories[2].MachineBrands = new List<MachineBrand>()
+                {
+                    machineBrands[2]
+                };
                 await context.MachineCategories.AddRangeAsync(machineCategories);
                 await context.MachineBrands.AddRangeAsync(machineBrands);
                 await context.MachineTypes.AddRangeAsync(machineTypes);

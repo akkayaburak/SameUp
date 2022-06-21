@@ -44,7 +44,6 @@ namespace Persistence
                 .HasOne(x => x.MachineType)
                 .WithMany(x => x.Machines)
                 .HasForeignKey(x => x.MachineTypeId);
-
         }
     }
 }

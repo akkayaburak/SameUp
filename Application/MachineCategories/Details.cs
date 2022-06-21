@@ -1,17 +1,19 @@
+using Application.Core;
 using Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.MachineCategories
 {
     public class Details
     {
-         public class Query : IRequest<MachineCategory>
+         public class Query : IRequest<Result<MachineCategory>>
          {
              public int Id { get; set; }
          }
 
-        public class Handler : IRequestHandler<Query, MachineCategory>
+        public class Handler : IRequestHandler<Query, Result<MachineCategory>>
         {
             private readonly DataContext _context;
 
@@ -20,9 +22,11 @@ namespace Application.MachineCategories
                 _context = context;
             }
 
-            public async Task<MachineCategory> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<MachineCategory>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.MachineCategories.FindAsync(request.Id);
+                var machineCategory = await _context.MachineCategories.FindAsync(request.Id);
+
+                return Result<MachineCategory>.Success(machineCategory);
             }
         }
     }
